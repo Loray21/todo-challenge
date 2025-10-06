@@ -1,37 +1,235 @@
-# Invera ToDo-List Challenge (Python/Django Jr-SSr)
+# Todo API
 
-El propósito de esta prueba es conocer tu capacidad para crear una pequeña aplicación funcional en un límite de tiempo. A continuación, encontrarás las funciones, los requisitos y los puntos clave que debés tener en cuenta durante el desarrollo.
+API para gestionar tareas con Django REST Framework y JWT. Permite a los usuarios autenticarse, crear, listar, buscar, filtrar y marcar tareas como completadas.
 
-## Qué queremos que hagas:
+---
 
-- El Challenge consiste en crear una aplicación web sencilla que permita a los usuarios crear y mantener una lista de tareas.
-- La entrega del resultado será en un nuevo fork de este repo y deberás hacer una pequeña demo del funcionamiento y desarrollo del proyecto ante un super comité de las más grandes mentes maestras de Invera, o a un par de devs, lo que sea más fácil de conseguir.
-- Podes contactarnos en caso que tengas alguna consulta.
+## 🔹 Levantar el proyecto localmente (sin Docker)
 
-## Objetivos:
+Sigue estos pasos para levantar la API localmente:
 
-El usuario de la aplicación tiene que ser capaz de:
+### 1️⃣ Clonar el repositorio
 
-- Autenticarse
-- Crear una tarea
-- Eliminar una tarea
-- Marcar tareas como completadas
-- Poder ver una lista de todas las tareas existentes
-- Filtrar/buscar tareas por fecha de creación y/o por el contenido de la misma
+```bash
+git clone <URL_DEL_REPOSITORIO>
+cd <NOMBRE_DEL_PROYECTO>
+```
 
-## Qué evaluamos:
+### 2️⃣ Crear y activar un entorno virtual
 
-- Desarrollo utilizando Python, Django. No es necesario crear un Front-End, pero sí es necesario tener una API que permita cumplir con los objetivos de arriba.
-- Uso de librerías y paquetes estandares que reduzcan la cantidad de código propio añadido.
-- Calidad y arquitectura de código. Facilidad de lectura y mantenimiento del código. Estándares seguidos.
-- [Bonus] Manejo de logs.
-- [Bonus] Creación de tests (unitarias y de integración)
-- [Bonus] Unificar la solución propuesta en una imagen de Docker por repositorio para poder ser ejecutada en cualquier ambiente (si aplica para full stack).
+```bash
+python -m venv venv
+# Windows
+venv\Scripts\activate
+# Linux / macOS
+source venv/bin/activate
+```
 
-## Requerimientos de entrega:
+### 3️⃣ Instalar dependencias
 
-- Hacer un fork del proyecto y pushearlo en github. Puede ser privado.
-- La solución debe correr correctamente.
-- El Readme debe contener todas las instrucciones para poder levantar la aplicación, en caso de ser necesario, y explicar cómo se usa.
-- Disponibilidad para realizar una pequeña demo del proyecto al finalizar el challenge.
-- Tiempo para la entrega: Aproximadamente 7 días.
+```bash
+pip install -r requirements.txt
+```
+
+### 4️⃣ Aplicar migraciones
+
+```bash
+python manage.py migrate
+```
+
+### 5️⃣ Crear superusuario (opcional)
+
+```bash
+python manage.py createsuperuser
+```
+
+### 6️⃣ Levantar el servidor
+
+```bash
+python manage.py runserver
+```
+
+El servidor quedará corriendo en:
+
+```
+http://localhost:8000/
+```
+
+---
+
+## 🔹 Levantar el proyecto con Docker
+
+### 1️⃣ Construir la imagen
+
+```bash
+docker build -t todo-api .
+```
+
+### 2️⃣ Correr el contenedor
+
+```bash
+docker run -p 8000:8000 todo-api
+```
+
+El servidor quedará corriendo en:
+
+```
+http://localhost:8000/
+```
+
+> Nota: El Dockerfile usa Gunicorn como servidor WSGI.
+
+---
+
+## 🔹 Base URL
+
+```
+http://localhost:8000/api/v1/
+```
+
+---
+
+## 🔹 Endpoints de Autenticación
+
+Se utiliza **Djoser** + **JWT** para autenticación.
+
+### 1️⃣ Registrar usuario
+
+```
+POST /users/
+```
+
+**Body (JSON)**:
+
+```json
+{
+  "username": "tomas",
+  "password": "12345678",
+  "email": "tomas@example.com"
+}
+```
+
+**Respuesta**: 201 Created
+
+---
+
+### 2️⃣ Login y obtener token JWT
+
+```
+POST /jwt/create/
+```
+
+**Body (JSON)**:
+
+```json
+{
+  "username": "tomas",
+  "password": "12345678"
+}
+```
+
+**Respuesta**:
+
+```json
+{
+  "access": "eyJ0eXAiOiJKV1QiLCJh...",
+  "refresh": "eyJ0eXAiOiJKV1QiLCJh..."
+}
+```
+
+**Nota**: Guardá el token `access` para usarlo en la autorización de tareas.
+
+---
+
+## 🔹 Headers para endpoints protegidos
+
+```
+Authorization: Bearer <ACCESS_TOKEN>
+Content-Type: application/json
+```
+
+---
+
+## 🔹 Endpoints de Tareas
+
+Todos los endpoints requieren **JWT**.
+
+### 1️⃣ Listar todas las tareas
+
+```
+GET /tasks/
+```
+
+Opcional: agregar query params para buscar y filtrar:
+
+- Buscar por contenido (title o description): `?search=leche`
+- Filtrar por fecha: `?created_at=2025-10-05`
+- Filtrar completadas: `?completed=true`
+- Ordenar: `?ordering=-created_at`
+
+**Ejemplo combinado**:
+
+```
+GET /tasks/?search=leche&created_at=2025-10-05&completed=false&ordering=-created_at
+```
+
+---
+
+### 2️⃣ Crear tarea
+
+```
+POST /tasks/
+```
+
+**Body (JSON)**:
+
+```json
+{
+  "title": "Comprar leche",
+  "description": "Ir al supermercado",
+  "completed": false
+}
+```
+
+**Respuesta**: 201 Created
+
+---
+
+### 3️⃣ Obtener tarea específica
+
+```
+GET /tasks/<id>/
+```
+
+**Ejemplo**:
+
+```
+GET /tasks/3/
+```
+
+---
+
+### 4️⃣ Actualizar tarea
+
+```
+PUT /tasks/<id>/
+```
+
+**Body (JSON)**:
+
+```json
+{
+  "title": "Comprar leche y pan",
+  "description": "Ir al supermercado",
+  "completed": true
+}
+```
+
+---
+
+### 5️⃣ Eliminar tarea
+
+```
+DELETE /tasks/<id>/
+```
+

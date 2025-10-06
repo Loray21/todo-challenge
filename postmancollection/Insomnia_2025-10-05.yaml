@@ -1,0 +1,240 @@
+type: collection.insomnia.rest/5.0
+name: challenge
+meta:
+  id: wrk_c0c29b3bb74748118fa34dd4e1e37244
+  created: 1759707941748
+  modified: 1759707941748
+  description: ""
+collection:
+  - name: challenge
+    meta:
+      id: fld_4599e6d5947c4be89f23bf5bced85d3f
+      created: 1759707975581
+      modified: 1759707975581
+      sortKey: -1759707975581
+      description: ""
+    children:
+      - url: http://127.0.0.1:8000/api/v1/users/
+        name: register
+        meta:
+          id: req_bc9bf7052d234982acdcbbc0ead43ba3
+          created: 1759708425337
+          modified: 1759709138740
+          isPrivate: false
+          description: ""
+          sortKey: -1759707954209
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"username": "tomasloray",
+            	"password": "challenge25"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.6.1
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://127.0.0.1:8000/api/v1/jwt/create/
+        name: get_jwt
+        meta:
+          id: req_f9fc930716cc4724bc863d38dc5be38c
+          created: 1759708459382
+          modified: 1759709156177
+          isPrivate: false
+          description: ""
+          sortKey: -1759708459382
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"username": "tomasloray",
+            	"password": "challenge25"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.6.1
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://127.0.0.1:8000/api/v1/tasks/
+        name: create_task
+        meta:
+          id: req_8cbe20572baf44889b78f43060a7ad29
+          created: 1759708934980
+          modified: 1759709634718
+          isPrivate: false
+          description: ""
+          sortKey: -1759708934980
+        method: POST
+        body:
+          mimeType: application/json
+          text: |
+            {
+              "title": "Comprar leche",
+              "description": "Ir al supermercado a comprar leche",
+              "completed": false,
+            	"user": 1
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.6.1
+        authentication:
+          type: bearer
+          token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzU5Nzk2MDE3LCJpYXQiOjE3NTk3MDk2MTcsImp0aSI6ImEyODg5ZDAxODNiZjRkNmZhZDcxYjA5NzIzOTRiYzQ5IiwidXNlcl9pZCI6IjEifQ.500y_vKJ1G4_OBGKfSogOD40Y1Uv_ihrZWHyoRFGc_U
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://127.0.0.1:8000/api/v1/tasks/
+        name: get_tasks
+        meta:
+          id: req_c2ede26a62f54741b3ed0becad3fd751
+          created: 1759709173736
+          modified: 1759710784083
+          isPrivate: false
+          description: ""
+          sortKey: -1759708697181
+        method: GET
+        body:
+          mimeType: application/json
+          text: "\n"
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.6.1
+        authentication:
+          type: bearer
+          token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzU5Nzk3MTU3LCJpYXQiOjE3NTk3MTA3NTcsImp0aSI6IjU3NTRhNjhjYmU5ZTRkYjNiYzA3YTgxMmVmODcxNGUwIiwidXNlcl9pZCI6IjEifQ.JNZist4O9tlPX9bWTt7EeVZIUbNkPcfQN5e1BazZQj8
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://127.0.0.1:8000/api/v1/tasks/?search=leche
+        name: filter_task_test
+        meta:
+          id: req_a360a5a67e4d4bcea6473e3d6e5e9542
+          created: 1759709264235
+          modified: 1759711732789
+          isPrivate: false
+          description: ""
+          sortKey: -1759708578281.5
+        method: GET
+        body:
+          mimeType: application/json
+          text: "\n"
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.6.1
+        authentication:
+          type: bearer
+          token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzU5Nzk4MTA5LCJpYXQiOjE3NTk3MTE3MDksImp0aSI6ImMzYTRmY2Y1ZGZjZjQ5YThhYTU0MzZjYmNjNTg4Njc1IiwidXNlcl9pZCI6IjEifQ.6tDeggcdkRoWge3bdyvLhAPG-b7fTfEAyL-eT4Eydiw
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://127.0.0.1:8000/api/v1/tasks/?created_at=2025-10-01
+        name: filter_task_date
+        meta:
+          id: req_6243cbf2b0c9493caa12bbfb3b850e15
+          created: 1759709323247
+          modified: 1759711753142
+          isPrivate: false
+          description: ""
+          sortKey: -1759708518831.75
+        method: GET
+        body:
+          mimeType: application/json
+          text: "\n"
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.6.1
+        authentication:
+          type: bearer
+          token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzU5Nzk4MTA5LCJpYXQiOjE3NTk3MTE3MDksImp0aSI6ImMzYTRmY2Y1ZGZjZjQ5YThhYTU0MzZjYmNjNTg4Njc1IiwidXNlcl9pZCI6IjEifQ.6tDeggcdkRoWge3bdyvLhAPG-b7fTfEAyL-eT4Eydiw
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://127.0.0.1:8000/api/v1/tasks/1/
+        name: filter_delete
+        meta:
+          id: req_e174f9e4eac54b2a95b00b53752c2a72
+          created: 1759710732021
+          modified: 1759710745530
+          isPrivate: false
+          description: ""
+          sortKey: -1759708489106.875
+        method: DELETE
+        body:
+          mimeType: application/json
+          text: "\n"
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.6.1
+        authentication:
+          type: bearer
+          token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzU5Nzk2MDE3LCJpYXQiOjE3NTk3MDk2MTcsImp0aSI6ImEyODg5ZDAxODNiZjRkNmZhZDcxYjA5NzIzOTRiYzQ5IiwidXNlcl9pZCI6IjEifQ.500y_vKJ1G4_OBGKfSogOD40Y1Uv_ihrZWHyoRFGc_U
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+cookieJar:
+  name: Default Jar
+  meta:
+    id: jar_11cbc2544a0e3ee4627df350c91756314f7412ed
+    created: 1759707941759
+    modified: 1759707941759
+environments:
+  name: Base Environment
+  meta:
+    id: env_11cbc2544a0e3ee4627df350c91756314f7412ed
+    created: 1759707941755
+    modified: 1759707941755
+    isPrivate: false
